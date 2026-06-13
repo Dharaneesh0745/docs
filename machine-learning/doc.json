@@ -5,11 +5,19 @@
   "children": [
     {
       "kind": "doc",
-      "slug": "introduction",
-      "title": "Introduction",
-      "file": "introduction.md",
+      "slug": "getting-started",
+      "title": "Getting Started",
+      "file": "getting-started/index.md",
       "icon": "BookOpen",
       "description": "Start your machine learning journey by understanding what ML is, why it matters, and how it is used to solve real-world problems."
+    },
+    {
+        "kind": "doc",
+        "slug": "what-is-machine-learning",
+        "title": "What is Machine Learning?",
+        "file": "what-is-machine-learning/index.md",
+        "icon": "Lightbulb",
+        "description": "Machine Learning (ML) is a branch of Artificial Intelligence (AI) that enables computers to learn patterns from data and make predictions or decisions without being explicitly programmed for every rule. Instead of relying solely on manually written instructions, Machine Learning algorithms analyze historical data, identify relationships, and improve their performance through experience. This beginner-friendly guide explains what Machine Learning is, how it works, its core concepts such as features, labels, datasets, and training, and the major types of Machine Learning including Supervised Learning, Unsupervised Learning, and Reinforcement Learning. You'll also learn when to use regression, classification, clustering, dimensionality reduction, and reinforcement learning through practical examples and intuitive explanations. Whether you're a student, aspiring data scientist, software engineer, or simply curious about AI, this comprehensive introduction provides the strong foundation needed to understand and apply Machine Learning concepts in real-world scenarios."
     }
   ]
 }

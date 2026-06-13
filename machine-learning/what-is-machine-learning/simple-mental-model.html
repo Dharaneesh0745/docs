@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Machine Learning Pipeline Flow</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+        background-color: #f1f5f9; /* Slate 100 */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 40px 20px;
+    }
+
+    .header-text {
+        text-align: center;
+        margin-bottom: 40px;
+        color: #0f172a;
+    }
+
+    .header-text h2 {
+        font-size: 2rem;
+        margin: 0 0 10px 0;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+    }
+
+    .header-text p {
+        color: #64748b;
+        margin: 0;
+        font-size: 1.1rem;
+    }
+
+    .pipeline-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    /* --- NODE STYLING --- */
+    .node {
+        padding: 24px 30px;
+        border-radius: 16px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        text-align: center;
+        width: 100%;
+        max-width: 320px; /* Keeps boxes uniform on desktop */
+        color: white;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    }
+
+    .node:hover {
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .node-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .node-desc {
+        font-size: 0.95rem;
+        font-weight: 400;
+        opacity: 0.9;
+        line-height: 1.4;
+    }
+
+    /* --- VIBRANT COLORS --- */
+    .node-data { 
+        background: linear-gradient(135deg, #3b82f6, #2563eb); /* Blue */
+        animation-delay: 0.1s; 
+    }
+    
+    .node-algo { 
+        background: linear-gradient(135deg, #8b5cf6, #7c3aed); /* Purple */
+        animation-delay: 0.3s; 
+    }
+    
+    .node-model { 
+        background: linear-gradient(135deg, #10b981, #059669); /* Emerald */
+        animation-delay: 0.5s; 
+    }
+    
+    .node-output { 
+        background: linear-gradient(135deg, #f59e0b, #d97706); /* Amber */
+        animation-delay: 0.7s; 
+    }
+
+    /* --- CONNECTING ARROWS --- */
+    .arrow-container {
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        animation: fadeIn 0.6s ease backwards;
+    }
+
+    .arrow {
+        width: 3px;
+        background-color: #cbd5e1; /* Slate 300 */
+        height: 100%;
+        position: relative;
+    }
+
+    .arrow::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%) rotate(45deg);
+        width: 12px;
+        height: 12px;
+        border-right: 3px solid #cbd5e1;
+        border-bottom: 3px solid #cbd5e1;
+        background-color: transparent;
+    }
+    
+    /* Arrow Animation Timings */
+    .arrow-container:nth-child(2) { animation-delay: 0.2s; }
+    .arrow-container:nth-child(4) { animation-delay: 0.4s; }
+    .arrow-container:nth-child(6) { animation-delay: 0.6s; }
+
+    /* --- ANIMATION KEYFRAMES --- */
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; height: 0; }
+        to { opacity: 1; height: 40px; }
+    }
+
+</style>
+</head>
+<body>
+
+    <div class="header-text">
+        <h2>The Mental Model</h2>
+        <p>How an AI turns raw information into answers.</p>
+    </div>
+
+    <div class="pipeline-container">
+        
+        <div class="node node-data">
+            <div class="node-title">📊 Data</div>
+            <div class="node-desc">The raw information, examples, or past records fed into the system.</div>
+        </div>
+        
+        <div class="arrow-container"><div class="arrow"></div></div>
+        
+        <div class="node node-algo">
+            <div class="node-title">⚙️ Learning Algorithm</div>
+            <div class="node-desc">The math that processes the data to find hidden patterns.</div>
+        </div>
+        
+        <div class="arrow-container"><div class="arrow"></div></div>
+        
+        <div class="node node-model">
+            <div class="node-title">🧠 Trained Model</div>
+            <div class="node-desc">The final "rulebook" the algorithm created after learning.</div>
+        </div>
+        
+        <div class="arrow-container"><div class="arrow"></div></div>
+        
+        <div class="node node-output">
+            <div class="node-title">🎯 Predictions & Insights</div>
+            <div class="node-desc">Using the model on brand new data to make decisions.</div>
+        </div>
+
+    </div>
+
+</body>
+</html>

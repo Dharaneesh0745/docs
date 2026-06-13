@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Reinforcement Learning Cycle</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+        background-color: #f8fafc; /* Light slate */
+        color: #0f172a;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 40px 20px;
+        overflow-x: hidden;
+    }
+
+    .header-text {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .header-text h2 {
+        font-size: 2.2rem;
+        margin: 0 0 10px 0;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+    }
+
+    .header-text p {
+        color: #64748b;
+        margin: 0;
+        font-size: 1.1rem;
+        max-width: 500px;
+    }
+
+    /* --- THE CYCLE WHEEL ENGINE (Desktop) --- */
+    .cycle-container {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+        height: 600px; /* Fixed height for the circle layout */
+        margin: auto;
+    }
+
+    /* The rotating track in the background */
+    .track-ring {
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        width: 80%;
+        height: 80%;
+        border-radius: 50%;
+        border: 4px dashed #cbd5e1; /* Slate 300 */
+        animation: spin 20s linear infinite;
+        z-index: 0;
+    }
+
+    @keyframes spin {
+        100% { transform: rotate(360deg); }
+    }
+
+    /* --- CENTRAL HUB (The Agent) --- */
+    .agent-hub {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 140px;
+        height: 140px;
+        background: #0f172a; /* Slate 900 */
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+        z-index: 10;
+        box-shadow: 0 0 0 8px rgba(15, 23, 42, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+        animation: pulse 2s infinite ease-in-out;
+    }
+
+    .agent-hub .icon { font-size: 2.5rem; margin-bottom: 4px; }
+    .agent-hub .title { font-weight: 800; font-size: 1.1rem; }
+    .agent-hub .subtitle { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
+
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(15, 23, 42, 0.2); }
+        70% { box-shadow: 0 0 0 20px rgba(15, 23, 42, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(15, 23, 42, 0); }
+    }
+
+    /* --- THE NODES (Steps in the cycle) --- */
+    .node {
+        position: absolute;
+        width: 180px;
+        padding: 20px;
+        background: white;
+        border-radius: 16px;
+        text-align: center;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        z-index: 5;
+        transition: transform 0.3s ease;
+        color: white;
+    }
+
+    .node:hover {
+        transform: scale(1.05);
+    }
+
+    .node-number {
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 24px;
+        height: 24px;
+        background: white;
+        color: #0f172a;
+        border-radius: 50%;
+        font-weight: 800;
+        font-size: 0.8rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .node-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 6px; }
+    .node-desc { font-size: 0.85rem; opacity: 0.9; line-height: 1.4; }
+
+    /* Node Placements & Colors (Clockwise from Top) */
+    
+    /* 1. Action */
+    .node-action {
+        top: 0; left: 50%; transform: translate(-50%, 0);
+        background: linear-gradient(135deg, #2563eb, #3b82f6); /* Blue */
+    }
+    .node-action:hover { transform: translate(-50%, -5px) scale(1.05); }
+
+    /* 2. Environment */
+    .node-env {
+        top: 50%; right: 0; transform: translate(0, -50%);
+        background: linear-gradient(135deg, #059669, #10b981); /* Emerald */
+    }
+    .node-env:hover { transform: translate(5px, -50%) scale(1.05); }
+
+    /* 3. Reward */
+    .node-reward {
+        bottom: 0; left: 50%; transform: translate(-50%, 0);
+        background: linear-gradient(135deg, #d97706, #f59e0b); /* Amber */
+    }
+    .node-reward:hover { transform: translate(-50%, 5px) scale(1.05); }
+
+    /* 4. Update Strategy */
+    .node-update {
+        top: 50%; left: 0; transform: translate(0, -50%);
+        background: linear-gradient(135deg, #7c3aed, #8b5cf6); /* Purple */
+    }
+    .node-update:hover { transform: translate(-5px, -50%) scale(1.05); }
+
+
+    /* --- MOBILE RESPONSIVENESS (Breaks into a Grid) --- */
+    @media (max-width: 700px) {
+        
+        .cycle-container {
+            height: auto; /* Remove fixed height */
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 2x2 Grid */
+            gap: 20px;
+            padding: 10px;
+        }
+
+        .track-ring { display: none; } /* Hide the circle track */
+
+        .agent-hub {
+            position: static;
+            transform: none;
+            grid-column: 1 / -1; /* Spans full width at the top */
+            width: 100%;
+            height: auto;
+            padding: 20px;
+            border-radius: 16px;
+            animation: none;
+            box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.3);
+        }
+
+        .agent-hub .icon { font-size: 2rem; }
+
+        .node {
+            position: static;
+            transform: none !important; /* Disable absolute hover effects */
+            width: 100%;
+        }
+
+        /* Reorder for mobile flow */
+        .node-action { order: 1; }
+        .node-env { order: 2; }
+        .node-reward { order: 4; }
+        .node-update { order: 3; }
+    }
+</style>
+</head>
+<body>
+
+    <div class="header-text">
+        <h2>Reinforcement Learning</h2>
+        <p>An infinite cycle of trial, error, and optimization.</p>
+    </div>
+
+    <div class="cycle-container">
+        
+        <div class="track-ring"></div>
+
+        <div class="agent-hub">
+            <div class="icon">🤖</div>
+            <div class="title">The Agent</div>
+            <div class="subtitle">Repeats Loop</div>
+        </div>
+
+        <div class="node node-action">
+            <div class="node-number">1</div>
+            <div class="node-title">Takes Action</div>
+            <div class="node-desc">The Agent makes a decision or move.</div>
+        </div>
+
+        <div class="node node-env">
+            <div class="node-number">2</div>
+            <div class="node-title">Environment Responds</div>
+            <div class="node-desc">The world changes based on the action.</div>
+        </div>
+
+        <div class="node node-reward">
+            <div class="node-number">3</div>
+            <div class="node-title">Receives Reward</div>
+            <div class="node-desc">A positive or negative score is given.</div>
+        </div>
+
+        <div class="node node-update">
+            <div class="node-number">4</div>
+            <div class="node-title">Updates Strategy</div>
+            <div class="node-desc">The AI alters its rules to maximize future scores.</div>
+        </div>
+
+    </div>
+
+</body>
+</html>
