@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Machine Learning Decision Tree</title>
+<title>What is Machine Learning?</title>
 
 <style>
     * {
@@ -13,12 +13,12 @@
     }
 
     body {
-        padding: 40px 20px 60px;
+        padding: 40px 20px 80px;
         font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
         background: #f1f5f9;
         color: #0f172a;
-        min-width: 320px;
         overflow-x: auto;
+        min-width: 360px;
     }
 
     .container {
@@ -41,7 +41,7 @@
         font-size: 1rem;
     }
 
-    /* ── TREE LAYOUT ──────────────────────────────── */
+    /* ── TREE LAYOUT ─────────────────────────────── */
 
     .tree {
         display: block;
@@ -50,7 +50,7 @@
 
     .tree ul {
         list-style: none;
-        padding: 30px 0 0;
+        padding: 28px 0 0;
         position: relative;
         display: flex;
         justify-content: center;
@@ -65,14 +65,15 @@
         left: 50%;
         transform: translateX(-50%);
         border-left: 2px solid #94a3b8;
-        height: 30px;
+        height: 28px;
         width: 0;
     }
 
     .tree li {
         list-style: none;
         position: relative;
-        padding: 30px 8px 0;
+        /* KEY FIX: tighter horizontal padding → leaf nodes don't overflow */
+        padding: 28px 5px 0;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -87,7 +88,7 @@
         position: absolute;
         top: 0;
         width: 50%;
-        height: 30px;
+        height: 28px;
         border-top: 2px solid #94a3b8;
     }
     .tree li::before { right: 50%; }
@@ -96,17 +97,16 @@
         border-left: 2px solid #94a3b8;
     }
 
-    /* Clean outer edges */
     .tree li:first-child::before,
     .tree li:last-child::after  { border: none; }
 
-    .tree li:last-child::before  {
+    .tree li:last-child::before {
         border-right: 2px solid #94a3b8;
         border-radius: 0 10px 0 0;
     }
-    .tree li:first-child::after  { border-radius: 10px 0 0 0; }
+    .tree li:first-child::after { border-radius: 10px 0 0 0; }
 
-    /* Only-child: just a straight vertical line */
+    /* Only-child: straight vertical */
     .tree li:only-child::before { display: none; }
     .tree li:only-child::after  {
         border-top: none;
@@ -117,34 +117,33 @@
         width: 0;
     }
 
-    /* ── ROOT LI: must be full-width so balanced-tier can split 50/50 ── */
+    /* ROOT LI must stretch full-width so balanced-tier can split 50/50 */
     .tree > ul > li {
         width: 100%;
         padding-left: 0;
         padding-right: 0;
     }
 
-    /* ── BALANCED TIER ──────────────────────────────── */
-    .balanced-tier {
-        width: 100%;
-    }
+    /* BALANCED TIER — true 50/50 split */
+    .balanced-tier { width: 100%; }
     .balanced-tier > li {
         flex: 1 1 0;
         min-width: 0;
     }
 
-    /* ── NODE CARD ──────────────────────────────────── */
+    /* ── NODE CARD ──────────────────────────────── */
     .node {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 14px 16px;
+        padding: 12px 14px;
         border-radius: 12px;
         background: white;
         border: 1px solid #cbd5e1;
         box-shadow: 0 4px 6px -1px rgba(0,0,0,.10), 0 2px 4px -1px rgba(0,0,0,.06);
-        width: 190px;
+        /* KEY FIX: 155px keeps 4 leaf nodes (4×165px=660px) inside 50% of 1400px container */
+        width: 155px;
         flex-shrink: 0;
         transition: transform 0.2s, box-shadow 0.2s;
         position: relative;
@@ -157,7 +156,7 @@
     }
 
     .node-title {
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 700;
         margin-bottom: 3px;
         text-align: center;
@@ -165,49 +164,20 @@
     }
 
     .node-desc {
-        font-size: 12px;
+        font-size: 11px;
         opacity: 0.88;
         text-align: center;
         line-height: 1.35;
     }
 
-    /* ── COLOUR THEMES ──────────────────────────────── */
-
-    .question {
-        background: #0f172a;
-        color: white;
-        border: none;
-    }
-
-    .branch-data {
-        background: linear-gradient(135deg, #2563eb, #3b82f6);
-        color: white; border: none;
-    }
-
-    .branch-env {
-        background: linear-gradient(135deg, #7c3aed, #8b5cf6);
-        color: white; border: none;
-    }
-
-    .sub-question {
-        background: #334155;
-        color: white; border: none;
-    }
-
-    .supervised {
-        background: linear-gradient(135deg, #059669, #10b981);
-        color: white; border: none;
-    }
-
-    .unsupervised {
-        background: linear-gradient(135deg, #e11d48, #f43f5e);
-        color: white; border: none;
-    }
-
-    .reinforcement {
-        background: linear-gradient(135deg, #d97706, #f59e0b);
-        color: white; border: none;
-    }
+    /* ── COLOUR THEMES ──────────────────────────── */
+    .question   { background: #0f172a; color: white; border: none; }
+    .branch-data{ background: linear-gradient(135deg,#2563eb,#3b82f6); color:white; border:none; }
+    .branch-env { background: linear-gradient(135deg,#7c3aed,#8b5cf6); color:white; border:none; }
+    .sub-question{ background: #334155; color:white; border:none; }
+    .supervised { background: linear-gradient(135deg,#059669,#10b981); color:white; border:none; }
+    .unsupervised{ background: linear-gradient(135deg,#e11d48,#f43f5e); color:white; border:none; }
+    .reinforcement{ background: linear-gradient(135deg,#d97706,#f59e0b); color:white; border:none; }
 
     .result {
         background: white;
@@ -217,34 +187,33 @@
     }
     .result .node-desc { color: #475569; }
 
-    /* ── ANIMATION ──────────────────────────────────── */
+    /* ── ANIMATION ──────────────────────────────── */
     @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(12px); }
-        to   { opacity: 1; transform: translateY(0); }
+        from { opacity:0; transform:translateY(10px); }
+        to   { opacity:1; transform:translateY(0); }
     }
-
-    .tree li:nth-child(1) { animation-delay: 0.10s; }
-    .tree li:nth-child(2) { animation-delay: 0.20s; }
+    .tree li:nth-child(1){ animation-delay:0.10s; }
+    .tree li:nth-child(2){ animation-delay:0.20s; }
 </style>
 </head>
 
 <body>
 <div class="container">
 
-    <h1>🌳 Machine Learning Approaches</h1>
-    <p class="subtitle">A simple flow-chart to determine which AI model type to use.</p>
+    <h1>🤖 What is Machine Learning?</h1>
+    <p class="subtitle">A visual overview of how machines learn — and the three core types of ML.</p>
 
     <div class="tree">
         <ul>
             <li>
                 <div class="node question">
-                    <div class="node-title">How is the AI learning?</div>
+                    <div class="node-title">How does the AI learn?</div>
                     <div class="node-desc">Dataset vs. Environment</div>
                 </div>
 
                 <ul class="balanced-tier">
 
-                    <!-- LEFT BRANCH: From a Dataset -->
+                    <!-- ── LEFT BRANCH: From a Dataset ── -->
                     <li>
                         <div class="node branch-data">
                             <div class="node-title">📊 From a Dataset</div>
@@ -254,7 +223,7 @@
                         <ul>
                             <li>
                                 <div class="node sub-question">
-                                    <div class="node-title">Do you have labels?</div>
+                                    <div class="node-title">Are outputs labeled?</div>
                                     <div class="node-desc">Is there a target column?</div>
                                 </div>
 
@@ -262,20 +231,20 @@
                                     <!-- YES → Supervised -->
                                     <li>
                                         <div class="node supervised">
-                                            <div class="node-title">✅ Yes (Supervised)</div>
-                                            <div class="node-desc">Predicting known answers</div>
+                                            <div class="node-title">✅ Yes → Supervised</div>
+                                            <div class="node-desc">Learns from labeled examples</div>
                                         </div>
                                         <ul>
                                             <li>
                                                 <div class="node result" style="border-top-color:#10b981;">
                                                     <div class="node-title">📈 Regression</div>
-                                                    <div class="node-desc">Target is a Number</div>
+                                                    <div class="node-desc">Predict a number<br><em>e.g. house price</em></div>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="node result" style="border-top-color:#10b981;">
                                                     <div class="node-title">🏷️ Classification</div>
-                                                    <div class="node-desc">Target is a Category</div>
+                                                    <div class="node-desc">Predict a category<br><em>e.g. spam / not spam</em></div>
                                                 </div>
                                             </li>
                                         </ul>
@@ -284,20 +253,20 @@
                                     <!-- NO → Unsupervised -->
                                     <li>
                                         <div class="node unsupervised">
-                                            <div class="node-title">❌ No (Unsupervised)</div>
-                                            <div class="node-desc">Finding hidden patterns</div>
+                                            <div class="node-title">❌ No → Unsupervised</div>
+                                            <div class="node-desc">Finds hidden patterns</div>
                                         </div>
                                         <ul>
                                             <li>
                                                 <div class="node result" style="border-top-color:#f43f5e;">
                                                     <div class="node-title">👥 Clustering</div>
-                                                    <div class="node-desc">Group similar data</div>
+                                                    <div class="node-desc">Group similar data<br><em>e.g. customer segments</em></div>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="node result" style="border-top-color:#f43f5e;">
-                                                    <div class="node-title">📉 Dimensionality</div>
-                                                    <div class="node-desc">Reduce features</div>
+                                                    <div class="node-title">📉 Dim. Reduction</div>
+                                                    <div class="node-desc">Compress features<br><em>e.g. PCA</em></div>
                                                 </div>
                                             </li>
                                         </ul>
@@ -307,17 +276,17 @@
                         </ul>
                     </li>
 
-                    <!-- RIGHT BRANCH: From Environment -->
+                    <!-- ── RIGHT BRANCH: From Environment ── -->
                     <li>
                         <div class="node branch-env">
                             <div class="node-title">🎮 From Environment</div>
-                            <div class="node-desc">Learning via actions &amp; feedback</div>
+                            <div class="node-desc">Learning via actions &amp; rewards</div>
                         </div>
                         <ul>
                             <li>
                                 <div class="node reinforcement">
                                     <div class="node-title">🤖 Reinforcement</div>
-                                    <div class="node-desc">Maximize rewards (Trial &amp; Error)</div>
+                                    <div class="node-desc">Maximize reward via trial &amp; error<br><em>e.g. game-playing AI</em></div>
                                 </div>
                             </li>
                         </ul>

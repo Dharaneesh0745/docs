@@ -791,28 +791,11 @@ Use Reinforcement Learning.
 
 # Decision Tree
 
-```
-Do you have labels?
-│
-├── Yes
-│   │
-│   ├── Target is numeric
-│   │       └── Regression
-│   │
-│   └── Target is categorical
-│           └── Classification
-│
-└── No
-    │
-    ├── Want groups?
-    │       └── Clustering
-    │
-    ├── Want fewer features?
-    │       └── Dimensionality Reduction
-    │
-    └── Learning via rewards?
-            └── Reinforcement Learning
-```
+<iframe
+  src="https://raw.githubusercontent.com/Dharaneesh0745/docs/master/machine-learning/what-is-machine-learning/decision-tree.html"
+  title="Learning Process"
+  height="320"
+/>
 
 ---
 
