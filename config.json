@@ -6,6 +6,7 @@
       "folder": "machine-learning",
       "label": "Machine Learning",
       "icon": "Brain",
+      "description": "Start your machine learning journey by understanding what ML is, why it matters, and how it is used to solve real-world problems.",
       "defaultOpen": true
     }
   ]
