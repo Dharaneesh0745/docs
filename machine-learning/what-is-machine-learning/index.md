@@ -87,7 +87,7 @@ A simple mental model:
 <iframe
   src="https://raw.githubusercontent.com/Dharaneesh0745/docs/master/machine-learning/what-is-machine-learning/simple-mental-model.html"
   title="Learning Process"
-  height="2000"
+  height="320"
 />
 
 ---
@@ -142,7 +142,7 @@ They are related but different.
 <iframe
   src="https://raw.githubusercontent.com/Dharaneesh0745/docs/master/machine-learning/what-is-machine-learning/relationship.html"
   title="Learning Process"
-  height="5000"
+  height="320"
 />
 
 ---
