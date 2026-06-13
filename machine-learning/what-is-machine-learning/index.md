@@ -1,7 +1,6 @@
 # What is Machine Learning and When Should You Use It?
 
 > A beginner-friendly guide to understanding Machine Learning, its types, key concepts, and when to apply each approach.
-
 ---
 
 # Introduction
@@ -79,7 +78,6 @@ Instead of asking:
 we ask:
 
 > "Can the computer discover the rules from examples?"
-
 ---
 
 ## The Machine Learning Workflow
@@ -89,7 +87,7 @@ A simple mental model:
 <iframe
   src="https://raw.githubusercontent.com/Dharaneesh0745/docs/master/machine-learning/what-is-machine-learning/simple-mental-model.html"
   title="Learning Process"
-  height="320"
+  height="auto"
 />
 
 ---
@@ -144,7 +142,7 @@ They are related but different.
 <iframe
   src="https://raw.githubusercontent.com/Dharaneesh0745/docs/master/machine-learning/what-is-machine-learning/relationship.html"
   title="Learning Process"
-  height="320"
+  height="5000"
 />
 
 ---
