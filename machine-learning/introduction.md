@@ -1,5 +1,3 @@
-# Introduction
-
 Welcome to the world of **Machine Learning (ML)**.
 
 Machine Learning is a branch of Artificial Intelligence (AI) that enables computers to learn patterns from data and make predictions or decisions without being explicitly programmed for every task.
@@ -47,8 +45,6 @@ In this guide, you will gradually build a strong foundation in Machine Learning 
 * Best practices and common pitfalls
 
 ## Prerequisites
-
-No prior experience in Machine Learning is required.
 
 A basic understanding of:
 
