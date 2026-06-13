@@ -87,7 +87,7 @@ A simple mental model:
 <iframe
   src="https://raw.githubusercontent.com/Dharaneesh0745/docs/master/machine-learning/what-is-machine-learning/simple-mental-model.html"
   title="Learning Process"
-  height="auto"
+  height="2000"
 />
 
 ---
