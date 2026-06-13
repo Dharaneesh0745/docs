@@ -1,4 +1,6 @@
 {
+  "label": "Machine Learning",
+  "icon": "Brain",
   "defaultOpen": true,
   "children": [
     {
