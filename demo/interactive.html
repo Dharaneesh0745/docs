@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Interactive Bar Chart</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0f172a; color: #e2e8f0;
+    font: 13px/1.4 system-ui, sans-serif; overflow: hidden; }
+  #wrap { position: relative; height: 100%; padding: 16px 20px; box-sizing: border-box; }
+  h3 { margin: 0 0 10px; font-weight: 500; font-size: 14px; color: #93c5fd; }
+  #c { display: block; width: 100%; height: calc(100% - 60px); cursor: pointer; }
+  .hint { font-size: 11px; opacity: .6; margin-top: 6px; }
+  #tip { position: absolute; pointer-events: none; background: #1e293b;
+    border: 1px solid #334155; padding: 4px 8px; border-radius: 4px;
+    font-size: 12px; transform: translate(-50%, -120%); opacity: 0;
+    transition: opacity 120ms; white-space: nowrap; }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <h3>Monthly Active Users — hover bars · click to shuffle</h3>
+  <canvas id="c"></canvas>
+  <div class="hint">Pure canvas. Animates on load and on every shuffle.</div>
+  <div id="tip"></div>
+</div>
+<script>
+  const cvs = document.getElementById('c'), ctx = cvs.getContext('2d');
+  const tip = document.getElementById('tip');
+  const labels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  let values = labels.map(() => 20 + Math.random() * 80);
+  let display = values.map(() => 0);
+  let hover = -1;
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+
+  function size() {
+    const r = cvs.getBoundingClientRect();
+    cvs.width = r.width * dpr; cvs.height = r.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  new ResizeObserver(size).observe(cvs); size();
+
+  function draw() {
+    const W = cvs.clientWidth, H = cvs.clientHeight;
+    ctx.clearRect(0, 0, W, H);
+    const pad = 28, bw = (W - pad * 2) / values.length * 0.7;
+    const gap = (W - pad * 2) / values.length * 0.3;
+    const max = 100;
+
+    ctx.strokeStyle = '#1e293b'; ctx.lineWidth = 1;
+    for (let i = 0; i <= 4; i++) {
+      const y = pad + (H - pad * 2) * (i / 4);
+      ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(W - pad, y); ctx.stroke();
+    }
+
+    let changing = false;
+    for (let i = 0; i < values.length; i++) {
+      display[i] += (values[i] - display[i]) * 0.12;
+      if (Math.abs(values[i] - display[i]) > 0.2) changing = true;
+      const x = pad + i * (bw + gap) + gap / 2;
+      const bh = (H - pad * 2) * (display[i] / max);
+      const y = H - pad - bh;
+      const grad = ctx.createLinearGradient(0, y, 0, y + bh);
+      grad.addColorStop(0, i === hover ? '#60a5fa' : '#3b82f6');
+      grad.addColorStop(1, '#1e3a8a');
+      ctx.fillStyle = grad;
+      ctx.fillRect(x, y, bw, bh);
+      ctx.fillStyle = '#64748b'; ctx.font = '11px system-ui';
+      ctx.textAlign = 'center';
+      ctx.fillText(labels[i], x + bw / 2, H - pad + 14);
+    }
+    if (changing) requestAnimationFrame(draw);
+  }
+  draw();
+
+  cvs.addEventListener('mousemove', e => {
+    const r = cvs.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const W = cvs.clientWidth, pad = 28;
+    const step = (W - pad * 2) / values.length;
+    const i = Math.floor((x - pad) / step);
+    hover = (i >= 0 && i < values.length) ? i : -1;
+    if (hover >= 0) {
+      tip.style.opacity = 1;
+      tip.style.left = e.clientX + 'px';
+      tip.style.top = e.clientY + 'px';
+      tip.textContent = `${labels[hover]}: ${values[hover].toFixed(0)}k`;
+    } else tip.style.opacity = 0;
+    draw();
+  });
+  cvs.addEventListener('mouseleave', () => { hover = -1; tip.style.opacity = 0; draw(); });
+  cvs.addEventListener('click', () => {
+    values = values.map(() => 20 + Math.random() * 80);
+    draw();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "site": { "title": "ignored", "description": "ignored" },
+  "docs": [
+    {
+      "id": "uid0001DB-machine-learning",
+      "folder": "machine-learning",
+      "label": "Machine Learning",
+      "icon": "Brain",
+      "defaultOpen": true
+    }
+  ]
+}

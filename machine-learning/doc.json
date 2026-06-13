@@ -1,0 +1,15 @@
+{
+  "label": "Machine Learning",
+  "icon": "Brain",
+  "defaultOpen": true,
+  "children": [
+    {
+      "kind": "doc",
+      "slug": "introduction",
+      "title": "Introduction",
+      "file": "introduction.md",
+      "icon": "BookOpen",
+      "description": "Start your machine learning journey by understanding what ML is, why it matters, and how it is used to solve real-world problems."
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "label": "Demo",
+  "icon": "Sparkles",
+  "defaultOpen": true,
+  "children": [
+    {
+      "kind": "doc",
+      "slug": "hello",
+      "title": "Hello Page",
+      "file": "hello.md",
+      "icon": "Hand",
+      "description": "First test page with code + embedded diagram."
+    },
+    {
+      "kind": "doc",
+      "slug": "interactive",
+      "title": "Interactive Chart",
+      "file": "interactive.md",
+      "icon": "BarChart3",
+      "description": "Animated canvas chart you can hover and click."
+    },
+    {
+      "kind": "section",
+      "label": "Nested examples",
+      "icon": "FolderTree",
+      "defaultOpen": false,
+      "children": [
+        {
+          "kind": "doc",
+          "slug": "deep-page",
+          "title": "Deep nested page",
+          "file": "nested/deep-page.md",
+          "icon": "FileCode",
+          "description": "Lives at demo/nested/deep-page.md with assets next to it."
+        },
+        {
+          "kind": "doc",
+          "slug": "api-docs",
+          "title": "API Documentation",
+          "file": "nested/api-docs.md",
+          "icon": "Code2",
+          "description": "API reference and endpoints documentation."
+        },
+        {
+          "kind": "doc",
+          "slug": "setup-guide",
+          "title": "Setup Guide",
+          "file": "nested/setup-guide.md",
+          "icon": "Zap",
+          "description": "Complete setup instructions to get started."
+        },
+        {
+          "kind": "section",
+          "label": "Advanced",
+          "icon": "Settings",
+          "defaultOpen": false,
+          "children": [
+            {
+              "kind": "doc",
+              "slug": "config-advanced",
+              "title": "Advanced Configuration",
+              "file": "nested/advanced/config-advanced.md",
+              "icon": "Wrench",
+              "description": "Advanced configuration options for power users."
+            },
+            {
+              "kind": "doc",
+              "slug": "troubleshooting",
+              "title": "Troubleshooting Guide",
+              "file": "nested/advanced/troubleshooting.md",
+              "icon": "AlertCircle",
+              "description": "Common issues and solutions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
